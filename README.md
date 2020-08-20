@@ -8,6 +8,8 @@ This project is created for quick functional verification of Contrail Networking
 
 
 create-stack.sh script will create multiple stacks which will be used for verification of the Contrail Networking platform <br/>
+
+Change the az and glance image information as per your environment in left_vn_vm1_add.yaml amd right_vn_vm1_add.yaml  <br/>
  
 
  * Create flavor (for dpdk and kmod) <br/>
