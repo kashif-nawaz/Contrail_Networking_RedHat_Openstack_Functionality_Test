@@ -1,0 +1,52 @@
+heat_template_version: queens 
+
+parameters:
+   vn_1_fq_name:
+      type: string
+      default: "default-domain:admin:left-net"
+      description: Web tier network name
+   vn_2_fq_name:
+      type: string
+      default: "default-domain:admin:right-net"
+      description: Web tier network name
+   policy_name:
+      type: string
+      default: "test-policy"
+      description: Policy name to connect Web and Db Tiers
+   policy_direction:
+      type: string
+      default: "<>"
+      description: Direction to apply policy
+
+resources:
+
+   policy_web_db:
+      type: OS::ContrailV2::NetworkPolicy
+      properties:
+         name: { get_param: policy_name }
+         network_policy_entries:
+            network_policy_entries_policy_rule: [
+               {
+                  network_policy_entries_policy_rule_direction: { get_param: policy_direction },
+                  network_policy_entries_policy_rule_protocol: "icmp",
+		  network_policy_entries_policy_rule_dst_addresses:
+                    [{
+                      network_policy_entries_policy_rule_dst_addresses_virtual_network: { get_param: vn_1_fq_name },
+                    }],
+		  network_policy_entries_policy_rule_src_addresses:
+                    [{
+                      network_policy_entries_policy_rule_src_addresses_virtual_network: { get_param: vn_2_fq_name },
+                    }],
+                  network_policy_entries_policy_rule_src_ports:
+                    [{
+                      network_policy_entries_policy_rule_src_ports_start_port: "1",
+                      network_policy_entries_policy_rule_src_ports_end_port: "255"
+                    }],
+                  network_policy_entries_policy_rule_dst_ports:
+                    [{
+                      network_policy_entries_policy_rule_dst_ports_start_port: "1",
+                      network_policy_entries_policy_rule_dst_ports_end_port: "255"
+                    }],
+                  network_policy_entries_policy_rule_action_list: { network_policy_entries_policy_rule_action_list_simple_action: "pass" },
+               }
+            ]

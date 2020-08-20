@@ -1,0 +1,14 @@
+heat_template_version: queens
+resources:
+        
+  nova_flavor:
+    type: OS::Nova::Flavor
+    properties:
+      is_public: true
+      name: m1.small-dpdk
+      ram: 4096
+      vcpus: 4
+      disk: 10
+      extra_specs: { "hw:cpu_policy" : "dedicated", "hw:mem_page_size": "large" }
+
+

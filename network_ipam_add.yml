@@ -1,0 +1,20 @@
+heat_template_version: queens
+parameters:
+  vdns: 
+    type: string
+    default: "default-domain:test-vdns"
+resources:
+  test_ipam:
+    type: OS::ContrailV2::NetworkIpam
+    properties:
+      name: test-ipam
+      virtual_DNS_refs: [ {get_param: vdns} ]
+      network_ipam_mgmt:
+          network_ipam_mgmt_ipam_dns_method: "virtual-dns-server"
+          network_ipam_mgmt_ipam_dns_server:
+              network_ipam_mgmt_ipam_dns_server_virtual_dns_server_name: "default-domain:test-vdns" 
+          network_ipam_mgmt_dhcp_option_list:
+              network_ipam_mgmt_dhcp_option_list_dhcp_option:
+                      - { network_ipam_mgmt_dhcp_option_list_dhcp_option_dhcp_option_name:  "26",
+                        network_ipam_mgmt_dhcp_option_list_dhcp_option_dhcp_option_value: "9000" }   
+        

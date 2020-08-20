@@ -1,0 +1,35 @@
+heat_template_version: queens                                                                                                                                                                                                     
+description: 
+  HOT to add a image to Glance, specifying the location of the image.
+  Prerequisite
+  ============
+  In ubuntu systems, the image file(.img) must be placed under the default
+  document root.
+  The default Ubuntu document root is /var/www/html , for this please make
+  sure apache2 web server is installed , enabled and running in jump host 
+parameters:
+
+  imgcontainer: 
+    type: string
+    default: 'bare'
+
+  imgdisk: 
+    type: string
+    default: 'qcow2'
+
+  imgname: 
+    type: string
+    default: 'ubuntu-one'
+    
+  imglocation: 
+    type: string
+    default: '~/bionic-server-cloudimg-amd64.img'
+
+resources:
+  glance_image:
+    type: OS::Glance::Image
+    properties:
+      container_format: { get_param: imgcontainer }
+      disk_format: { get_param: imgdisk }
+      name: { get_param: imgname }
+      location: { get_param: imglocation }

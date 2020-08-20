@@ -1,0 +1,13 @@
+heat_template_version: queens
+resources:
+        
+  nova_flavor:
+    type: OS::Nova::Flavor
+    properties:
+      is_public: true
+      name: m1.small
+      ram: 4096
+      vcpus: 4
+      disk: 10
+
+

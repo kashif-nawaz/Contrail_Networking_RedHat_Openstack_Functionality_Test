@@ -1,0 +1,58 @@
+heat_template_version: queens
+parameters:
+
+  vn_name: 
+    type: string
+    default: "left-net"
+
+  prefix: 
+    type: string
+    default: '10.10.0.0'
+
+  mask: 
+    type: string 
+    default: '24'
+
+  default_ipam: 
+    type: string 
+    default: 'default-domain:default-project:default-network-ipam'
+
+  vn_ipam:
+    type: string
+    default: "default-domain:admin:test-ipam"
+
+  policy:
+    type: string
+    default: "default-domain:admin:test-policy"
+resources:
+        
+  left_vn:
+    type: OS::ContrailV2::VirtualNetwork
+    properties:
+      name: { get_param: vn_name}    
+      network_ipam_refs: [{ get_param: vn_ipam }]      
+      network_ipam_refs_data:
+        [{
+          network_ipam_refs_data_ipam_subnets:
+            [{
+              network_ipam_refs_data_ipam_subnets_addr_from_start: "true",
+              network_ipam_refs_data_ipam_subnets_subnet:
+                {
+                  network_ipam_refs_data_ipam_subnets_subnet_ip_prefix: { get_param: prefix },
+                  network_ipam_refs_data_ipam_subnets_subnet_ip_prefix_len: { get_param: mask },
+                }
+         }]
+        }]
+
+      network_policy_refs: [{ get_param: policy }]
+      network_policy_refs_data:
+        [{
+          network_policy_refs_data_sequence:
+            {
+              network_policy_refs_data_sequence_major: 0,
+              network_policy_refs_data_sequence_minor: 0,
+            },
+        }]
+
+      
+  
