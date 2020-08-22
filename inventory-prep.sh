@@ -2,10 +2,7 @@
 #!/bin/bash
 
 
-rm -fr ~/atp
-mkdir ~/atp
 source ~/stackrc
-
 cd ~/atp
 
 cat >> ~/atp/inventory-overcloud.sh << EOF
