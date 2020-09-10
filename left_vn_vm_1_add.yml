@@ -54,7 +54,7 @@ resources:
       virtual_machine_interface_dhcp_option_list:
               virtual_machine_interface_dhcp_option_list_dhcp_option:
                       - { virtual_machine_interface_dhcp_option_list_dhcp_option_dhcp_option_name:  "26",
-                        virtual_machine_interface_dhcp_option_list_dhcp_option_dhcp_option_value: "1500" }
+                        virtual_machine_interface_dhcp_option_list_dhcp_option_dhcp_option_value: "9000" }
 
   vmi_instance_ip:
     type: OS::ContrailV2::InstanceIp
